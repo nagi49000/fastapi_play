@@ -1,2 +1,2 @@
 export PYTHONPATH=${PYTHONPATH}:`pwd`
-uvicorn api.server:app
+python api/server.py
