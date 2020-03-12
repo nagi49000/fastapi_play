@@ -1,4 +1,5 @@
-version: '3.3'
+version: "3.7"
+
 services:
   web:
     build: .
@@ -8,7 +9,7 @@ services:
       - ./docker/pkgs:/pkgs
       - ./docker/envs:/envs
     ports:
-      - "7000:8000"
+      - 7000:8000
     user: "${USER_ID}:${GROUP_ID}"
     environment:
       - PYTHONPATH=/app

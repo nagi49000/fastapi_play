@@ -12,7 +12,7 @@ self_dir=$(dirname $0)
 # want to be explicit about our directories.  While the likelihood of Docker's
 # behaviour changing is low due to backward compatibility, this gives us the
 # added advantage that we will be resilient to a potential external change.
-mkdir -p ${self_dir}/docker/logs
+mkdir -p ${self_dir}/docker/{logs,pkgs,envs}
 
 USER_ID="$(id -u)"; GROUP_ID="$(id -g)"
 export USER_ID GROUP_ID
