@@ -12,6 +12,6 @@ services:
       - 7000:8000
     user: "${USER_ID}:${GROUP_ID}"
     environment:
-      - PYTHONPATH=/app
+      - PYTHONPATH=/api
       - CONDA_PKGS_DIRS=/pkgs
       - CONDA_ENVS_PATH=/envs

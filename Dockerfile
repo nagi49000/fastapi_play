@@ -1,5 +1,3 @@
 FROM continuumio/miniconda3
-
-WORKDIR /app
-COPY ./api /app
+WORKDIR /api
 ENTRYPOINT ["bash", "run_server_in_docker.sh"]
