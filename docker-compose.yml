@@ -15,3 +15,4 @@ services:
       - PYTHONPATH=/api
       - CONDA_PKGS_DIRS=/pkgs
       - CONDA_ENVS_PATH=/envs
+    command: /bin/bash -c /api/run_server_in_docker.sh
