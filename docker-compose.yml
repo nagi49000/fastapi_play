@@ -2,9 +2,7 @@ version: "3.7"
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: continuumio/miniconda3
     volumes:
       - ./api:/api
       - ./docker/logs:/logs
