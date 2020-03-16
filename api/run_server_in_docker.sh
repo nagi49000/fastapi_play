@@ -4,7 +4,7 @@ cd ${self_dir}
 # allow conda activate to be run in shell
 source /opt/conda/etc/profile.d/conda.sh 1>> /logs/conda_stdout.log 2>>/logs/conda_stderr.log
 # book-keeping
-git log -1 1>> /logs/git_stdout.log 2>> /logs/git_stderr.log
+# git log -1 1>> /logs/git_stdout.log 2>> /logs/git_stderr.log
 conda --version 1>> /logs/conda_stdout.log 2>>/logs/conda_stderr.log
 # update environment from code on mountpoint
 conda env update -f environment.yml -n server_in_docker_env 1>> /logs/conda_stdout.log 2>>/logs/conda_stderr.log
