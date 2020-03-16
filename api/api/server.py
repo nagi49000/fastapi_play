@@ -42,7 +42,7 @@ def get_log_config(log_level):
             },
             "access": {
                 "()": "uvicorn.logging.AccessFormatter",
-                "fmt": '%(asctime)s %(levelname) %(client_addr)s - "%(request_line)s" %(status_code)s',
+                "fmt": '%(asctime)s %(levelprefix)s %(client_addr)s - "%(request_line)s" %(status_code)s',
             },
         },
         "handlers": {
