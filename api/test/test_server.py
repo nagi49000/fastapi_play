@@ -7,13 +7,9 @@ def test_get_run_kwargs():
                  'port': 8000,
                  'log_config': {'disable_existing_loggers': False,
                                 'formatters': {'access': {'()': 'uvicorn.logging.AccessFormatter',
-                                                          'fmt': '%(asctime)s %(levelname) '
-                                                          '%(client_addr)s - '
-                                                          '"%(request_line)s" '
-                                                          '%(status_code)s'},
+                                                          'fmt': '%(asctime)s %(levelprefix)s %(client_addr)s - "%(request_line)s" %(status_code)s'},
                                                'default': {'()': 'uvicorn.logging.DefaultFormatter',
-                                                           'fmt': '%(asctime)s %(levelname)-8s '
-                                                           '%(message)s'}
+                                                           'fmt': '%(asctime)s %(levelname)-8s %(message)s'}
                                                },
                                 'handlers': {'access': {'class': 'logging.StreamHandler',
                                                         'formatter': 'access',
@@ -39,7 +35,7 @@ def test_get_run_kwargs():
                  'port': 1234,
                  'log_config': {'disable_existing_loggers': False,
                                 'formatters': {'access': {'()': 'uvicorn.logging.AccessFormatter',
-                                                          'fmt': '%(asctime)s %(levelname) %(client_addr)s - "%(request_line)s" %(status_code)s'},
+                                                          'fmt': '%(asctime)s %(levelprefix)s %(client_addr)s - "%(request_line)s" %(status_code)s'},
                                                'default': {'()': 'uvicorn.logging.DefaultFormatter',
                                                            'fmt': '%(asctime)s %(levelname)-8s %(message)s'}
                                                },
