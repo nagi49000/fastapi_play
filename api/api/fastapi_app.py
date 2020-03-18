@@ -50,3 +50,5 @@ def create_app():
         return r_dict
 
     return app
+
+app = create_app()
