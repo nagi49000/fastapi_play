@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e -u
 self_dir=$(dirname $0)
 cd ${self_dir}
 # allow conda activate to be run in shell
