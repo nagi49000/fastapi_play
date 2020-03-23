@@ -17,4 +17,4 @@ mkdir -p ${self_dir}/docker/{logs,pkgs,envs}
 USER_ID="$(id -u)"; GROUP_ID="$(id -g)"
 export USER_ID GROUP_ID
 
-docker-compose -f $self_dir/docker-compose.yml up --build
+docker-compose -f ${self_dir}/docker-compose.yml up --build
