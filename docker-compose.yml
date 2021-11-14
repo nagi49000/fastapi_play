@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/api
+      - ./docker/logs:/logs
+      - ./docker/pkgs:/pkgs
+      - ./docker/envs:/envs
+    ports:
+      - 7000:8000
+    user: "${USER_ID}:${GROUP_ID}"
+    environment:
+      - PYTHONPATH=/api
+      - CONDA_PKGS_DIRS=/pkgs
+      - CONDA_ENVS_PATH=/envs
+    command: /bin/bash -c /api/run_server_in_docker.sh
