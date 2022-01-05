@@ -17,15 +17,17 @@ def test_hello_world(client):
 
 
 def test_parrot_back(client):
-    response = client.post("/parrot_back", json={'header': 'my_header',
-                                                 'parrot_request': {
-                                                     'n_repeat': 3,
-                                                     'sep': ", ",
-                                                     'parrot_str': 'blah'
-                                                 }}
-                           )
+    post_json = {
+        "header": "my_header",
+        "parrot_request": {
+            "n_repeat": 3,
+            "sep": ", ",
+            "parrot_str": "blah"
+        }
+    }
+    response = client.post("/parrot_back", json=post_json)
     assert response.status_code == 200
     j = response.json()
-    assert j['header'] == 'my_header'
-    assert j['results']['parrot'] == 'parrot back blah, blah, blah'
-    datetime.datetime.strptime(j['results']['time'], '%Y-%m-%dT%H:%M:%SZ')
+    assert j["header"] == "my_header"
+    assert j["results"]["parrot"] == "parrot back blah, blah, blah"
+    datetime.datetime.strptime(j["results"]["time"], "%Y-%m-%dT%H:%M:%SZ")
