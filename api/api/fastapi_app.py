@@ -38,9 +38,9 @@ def get_gunicorn_logger(name="gunicorn.error"):
     return logger
 
 
-def create_app():
-    logger = get_gunicorn_logger()
-    app = FastAPI()
+def create_app(logger_name="gunicorn.error"):
+    logger = get_gunicorn_logger(name=logger_name)
+    app = FastAPI(title="simple test app")
 
     @app.get("/hello_world", response_model=HelloWorldResponse)
     async def hello_world():
