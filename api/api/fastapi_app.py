@@ -60,5 +60,3 @@ def create_app(logger_name="gunicorn.error"):
         return r_dict
 
     return app
-
-app = create_app()
