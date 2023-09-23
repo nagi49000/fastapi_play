@@ -49,7 +49,7 @@ def create_app(logger_name="gunicorn.error"):
 
     @app.post("/parrot_back", response_model=ParrotBackResponse)
     async def parrot_back(p: ParrotRequest):
-        p_dict = p.dict()
+        p_dict = p.model_dump()
         logger.debug('/parrot_back: '+str(p_dict))
         params = p_dict['parrot_request']
         r_dict = {'header': p_dict['header'],

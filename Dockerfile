@@ -1,17 +1,24 @@
-FROM continuumio/miniconda3:latest as builder
+FROM mambaorg/micromamba:latest as builder
 
-ENV APP_HOME=/app
+ENV APP_HOME=/home/mambauser/app
+# run mkdir so that folder owned by mambauser
+RUN mkdir ${APP_HOME}
 WORKDIR ${APP_HOME}
-COPY api ./
+COPY --chown=mambauser:mambauser api ./
+RUN micromamba update -f environment-prod.yml --name base
 
 FROM builder AS tester
-RUN conda env update --file environment-test.yml --name base --prune && \
-    python -m pytest --cov=./api
+RUN micromamba install pytest-cov -c conda-forge --name base && \
+    # for some reason, PATH not working here, so use full path
+    /opt/conda/bin/python -m pytest --cov=./api
 
 FROM builder AS prod
-RUN conda env update --file environment-prod.yml --name base --prune && \
-    groupadd --system app && \
+RUN micromamba clean
+# switch to root briefly to make a specific user for app
+USER root
+RUN groupadd --system app && \
     useradd -g app --system app && \
     chown -R app:app ${APP_HOME} && \
     chmod -R 755 ${APP_HOME}
+USER app
 CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "api.api_app:app", "--bind", "0.0.0.0:6780", "--log-level", "DEBUG"]
