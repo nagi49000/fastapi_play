@@ -39,7 +39,8 @@ jobs:
     - name: docker builds
       run: |
         docker-compose build
-    - name: run docker images
+    - name: run image in container
+      run: |
         docker-compose up --detach
         sleep 1
         curl http://localhost:6780/hello_world
