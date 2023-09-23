@@ -4,11 +4,9 @@ services:
   test:
     build:
       context: .
-      dockerfile: Dockerfile-test
+      target: tester
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile-prod
+    build: .
     ports:
       - 6780:6780

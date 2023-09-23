@@ -27,8 +27,7 @@ python asgi.py
 The docker setup consists of:
 
 *  docker-compose.yml
-*  Dockerfile-prod
-*  Dockerfile-test
+*  Dockerfile
 
 Unit tests and builds can be run using
 ```
