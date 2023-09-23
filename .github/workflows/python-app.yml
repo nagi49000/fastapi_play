@@ -38,10 +38,10 @@ jobs:
         cd ./api; python -m pytest --cov=./api
     - name: docker builds
       run: |
-        docker-compose build
+        docker-compose build test
     - name: run image in container
       run: |
-        docker-compose up --detach
+        docker-compose up --build --detach
         sleep 1
         curl http://localhost:6780/hello_world
         docker-compose down
