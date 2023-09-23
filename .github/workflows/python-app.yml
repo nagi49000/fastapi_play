@@ -36,3 +36,11 @@ jobs:
     - name: Test with pytest
       run: |
         cd ./api; python -m pytest --cov=./api
+    - name: docker builds
+      run: |
+        docker-compose build
+    - name: run docker images
+        docker-compose up --detach
+        sleep 1
+        curl http://localhost:6780/hello_world
+        docker-compose down
