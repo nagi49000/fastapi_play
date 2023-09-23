@@ -1,3 +1,4 @@
+# using micromamba for speed
 FROM mambaorg/micromamba:latest as builder
 
 ENV APP_HOME=/home/mambauser/app
