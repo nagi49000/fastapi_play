@@ -11,17 +11,14 @@ RUN mkdir -p ${APP_HOME} && \
     chown -R ${USER}:${USER} ${APP_HOME} && \
     chmod -R 755 ${APP_HOME}
 
+WORKDIR ${APP_HOME}
+COPY --chown=${USER}:${USER} api ./
+
 FROM builder AS tester
 RUN pip install pytest-cov && \
     python -m pytest --cov=./api
 
 FROM builder AS prod
-
 USER ${USER}
-
-WORKDIR ${APP_HOME}
-
-COPY --chown=${USER}:${USER} api ./
-ENV LOG_LEVEL=DEBUG
-
-CMD ["granian", "api.api_app:app", "--interface", "asgi", "--log-level", "DEBUG", "--host", "0.0.0.0", "--port", "6780"]
+ENV LOGGER_NAME="_granian"
+CMD ["granian", "api.api_app:app", "--access-log", "--interface", "asgi", "--log-level", "DEBUG", "--host", "0.0.0.0", "--port", "6780"]
