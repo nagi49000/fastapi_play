@@ -1,25 +1,22 @@
-# using micromamba for speed
-FROM mambaorg/micromamba:latest AS builder
+FROM astral/uv:python3.11-trixie-slim AS builder
 
-ENV APP_HOME=/home/mambauser/app
-# run mkdir so that folder owned by mambauser
-RUN mkdir ${APP_HOME}
+ENV USER=app
+ENV APP_HOME=/home/${USER}
+RUN mkdir -p ${APP_HOME} && \
+    groupadd --system ${USER} && \
+    useradd -g app --system ${USER} && \
+    chown -R ${USER}:${USER} ${APP_HOME} && \
+    chmod -R 755 ${APP_HOME}
+
 WORKDIR ${APP_HOME}
-COPY --chown=mambauser:mambauser api ./
-RUN micromamba update -y -f environment-prod.yml --name base
+COPY --chown=${USER}:${USER} api ./
+
+RUN uv sync --compile-bytecode --locked
 
 FROM builder AS tester
-RUN micromamba install pytest-cov -c conda-forge --name base && \
-    # for some reason, PATH not working here, so use full path
-    /opt/conda/bin/python -m pytest --cov=./api
+RUN uv pip install pytest-cov && \
+    .venv/bin/python -m pytest --cov=./api
 
 FROM builder AS prod
-RUN micromamba clean
-# switch to root briefly to make a specific user for app
-USER root
-RUN groupadd --system app && \
-    useradd -g app --system app && \
-    chown -R app:app ${APP_HOME} && \
-    chmod -R 755 ${APP_HOME}
-USER app
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "api.api_app:app", "--bind", "0.0.0.0:6780", "--log-level", "DEBUG"]
+USER ${USER}
+CMD [".venv/bin/gunicorn", "-k", "uvicorn.workers.UvicornWorker", "api.api_app:app", "--bind", "0.0.0.0:6780", "--log-level", "DEBUG"]
