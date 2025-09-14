@@ -12,6 +12,7 @@ uv sync --locked
 ```
 or, in the absence of `uv`, after creating a suitable environment,
 ```
+# in fastapi_play/api/
 pip install -r github-pipeline-requirements.txt
 ```
 
@@ -32,17 +33,23 @@ python asgi.py
 The docker setup consists of:
 
 *  docker-compose.yml
-*  Dockerfile
+*  Dockerfile.uvicorn
+*  Dockerfile.granian
 
 Unit tests and builds can be run using
 ```
 # in fastapi_play/
-docker-compose build
+docker compose build
 ```
 and the app can be run (in a container) using
 ```
 # in fastapi_play/
-docker-compose up
+docker compose up
+```
+
+The available server ports cat be obtained from
+```
+docker container ps
 ```
 
 ### FastAPI docs ###
