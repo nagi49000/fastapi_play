@@ -1,7 +1,7 @@
 FROM python:3.11-slim AS builder
 
 # check that this is all as lightweight as it should be
-RUN pip install fastapi granian
+RUN pip install fastapi granian httpx
 
 ENV USER=app
 ENV APP_HOME=/home/${USER}

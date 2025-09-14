@@ -1,15 +1,28 @@
 version: "3.7"
 
 services:
-  test:
+  uvicorn-test:
     build:
       context: .
       dockerfile: Dockerfile.uvicorn
       target: tester
 
-  web:
+  uvicorn-web:
     build:
       context: .
       dockerfile: Dockerfile.uvicorn
     ports:
       - 6780:6780
+
+  granian-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.granian
+      target: tester
+
+  granian-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.granian
+    ports:
+      - 6781:6780

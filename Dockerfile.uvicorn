@@ -1,12 +1,12 @@
 # using micromamba for speed
-FROM mambaorg/micromamba:latest as builder
+FROM mambaorg/micromamba:latest AS builder
 
 ENV APP_HOME=/home/mambauser/app
 # run mkdir so that folder owned by mambauser
 RUN mkdir ${APP_HOME}
 WORKDIR ${APP_HOME}
 COPY --chown=mambauser:mambauser api ./
-RUN micromamba update -f environment-prod.yml --name base
+RUN micromamba update -y -f environment-prod.yml --name base
 
 FROM builder AS tester
 RUN micromamba install pytest-cov -c conda-forge --name base && \
