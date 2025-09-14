@@ -1,0 +1,22 @@
+FROM astral/uv:python3.11-trixie-slim AS builder
+
+ENV USER=app
+ENV APP_HOME=/home/${USER}
+RUN mkdir -p ${APP_HOME} && \
+    groupadd --system ${USER} && \
+    useradd -g app --system ${USER} && \
+    chown -R ${USER}:${USER} ${APP_HOME} && \
+    chmod -R 755 ${APP_HOME}
+
+WORKDIR ${APP_HOME}
+COPY --chown=${USER}:${USER} api ./
+
+RUN uv sync --compile-bytecode --locked
+
+FROM builder AS tester
+RUN uv pip install pytest-cov && \
+    .venv/bin/python -m pytest --cov=./api
+
+FROM builder AS prod
+USER ${USER}
+CMD [".venv/bin/gunicorn", "-k", "uvicorn.workers.UvicornWorker", "api.api_app:app", "--bind", "0.0.0.0:6780", "--log-level", "DEBUG"]

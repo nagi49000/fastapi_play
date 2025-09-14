@@ -42,15 +42,15 @@ def create_app(logger_name="gunicorn.error"):
     logger = get_gunicorn_logger(name=logger_name)
     app = FastAPI(title="simple test app")
 
-    @app.get("/hello_world", response_model=HelloWorldResponse)
+    @app.get("/hello-world", response_model=HelloWorldResponse)
     async def hello_world():
-        logger.debug('/hello_world')
+        logger.debug('/hello-world')
         return {"message": "Hello World"}
 
-    @app.post("/parrot_back", response_model=ParrotBackResponse)
+    @app.post("/parrot-back", response_model=ParrotBackResponse)
     async def parrot_back(p: ParrotRequest):
         p_dict = p.model_dump()
-        logger.debug('/parrot_back: '+str(p_dict))
+        logger.debug(f"/parrot-back: {p_dict}")
         params = p_dict['parrot_request']
         r_dict = {'header': p_dict['header'],
                   'results': {'time': datetime.datetime.utcnow().isoformat(timespec='seconds')+'Z',
