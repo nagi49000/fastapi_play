@@ -38,7 +38,7 @@ jobs:
         cd ./api; python -m pytest --cov=./api
     - name: docker builds
       run: |
-        docker compose build test
+        docker compose build
     - name: run image in container
       run: |
         docker compose up --build --detach
