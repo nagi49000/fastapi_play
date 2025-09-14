@@ -4,9 +4,12 @@ services:
   test:
     build:
       context: .
+      dockerfile: Dockerfile.uvicorn
       target: tester
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.uvicorn
     ports:
       - 6780:6780

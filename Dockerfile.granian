@@ -1,0 +1,27 @@
+FROM python:3.11-slim AS builder
+
+# check that this is all as lightweight as it should be
+RUN pip install fastapi granian
+
+ENV USER=app
+ENV APP_HOME=/home/${USER}
+RUN mkdir -p ${APP_HOME} && \
+    groupadd --system ${USER} && \
+    useradd -g app --system ${USER} && \
+    chown -R ${USER}:${USER} ${APP_HOME} && \
+    chmod -R 755 ${APP_HOME}
+
+FROM builder AS tester
+RUN pip install pytest-cov && \
+    python -m pytest --cov=./api
+
+FROM builder AS prod
+
+USER ${USER}
+
+WORKDIR ${APP_HOME}
+
+COPY --chown=${USER}:${USER} api ./
+ENV LOG_LEVEL=DEBUG
+
+CMD ["granian", "api.api_app:app", "--interface", "asgi", "--log-level", "DEBUG", "--host", "0.0.0.0", "--port", "6780"]
