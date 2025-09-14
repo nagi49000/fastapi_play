@@ -3,11 +3,16 @@ a repo for playing with FastAPI and Docker
 
 ### FastAPI app ###
 
-The app is contained wholely in the 'api' directory. This contains unit tests, and a full ymls for a conda environments (a -test.yml for dev, and a -prod.yml for prod). A development environment can be created (and entered) by
+The app is contained wholely in the 'api' directory.
+
+A development environment can be created with `uv`
 ```
 # in fastapi_play/api/
-conda env create -f environment-test.yml
-conda activate fastapi_play_env
+uv sync --locked
+```
+or, in the absence of `uv`, after creating a suitable environment,
+```
+pip install -r github-pipeline-requirements.txt
 ```
 
 The unit tests can be run using pytest (from the api directory).
